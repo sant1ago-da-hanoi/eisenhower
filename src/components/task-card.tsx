@@ -22,73 +22,51 @@ type Props = {
 	onEdit: () => void;
 };
 
-export function TaskCard({ task, onEdit }: Props) {
-	const [isPending, startTransition] = useTransition();
-
-	const {
-		attributes,
-		listeners,
-		setNodeRef,
-		transform,
-		transition,
-		isDragging,
-	} = useSortable({
-		id: task.id,
-		data: { type: "task", quadrant: task.quadrant },
-	});
-
-	const style = {
-		transform: CSS.Transform.toString(transform),
-		transition,
-	};
-
-	function handleToggle(checked: boolean) {
-		startTransition(async () => {
-			try {
-				await toggleTaskCompleted({ id: task.id, completed: checked });
-			} catch (err) {
-				toast.error(err instanceof Error ? err.message : "Có lỗi xảy ra");
-			}
-		});
-	}
-
-	function handleDelete() {
-		startTransition(async () => {
-			try {
-				await deleteTask({ id: task.id });
-				toast.success("Đã xóa task");
-			} catch (err) {
-				toast.error(err instanceof Error ? err.message : "Có lỗi xảy ra");
-			}
-		});
-	}
-
+/** Visual-only card, used by both the sortable wrapper and DragOverlay. */
+export function TaskCardView({
+	task,
+	dragging = false,
+	overlay = false,
+	onToggle,
+	onEdit,
+	onDelete,
+	dragHandleProps,
+}: {
+	task: TaskWithTags;
+	dragging?: boolean;
+	overlay?: boolean;
+	onToggle?: (checked: boolean) => void;
+	onEdit?: () => void;
+	onDelete?: () => void;
+	dragHandleProps?: React.HTMLAttributes<HTMLButtonElement>;
+}) {
 	return (
 		<div
-			ref={setNodeRef}
-			style={style}
 			className={cn(
-				"group/card relative rounded-lg border bg-card p-3 shadow-sm transition",
-				"hover:border-foreground/30",
-				isDragging && "opacity-60 shadow-lg ring-2 ring-foreground/20",
-				task.completed && "opacity-60",
-				isPending && "pointer-events-none opacity-50",
+				"group/card relative rounded-lg border bg-card p-3 shadow-sm transition-shadow",
+				!overlay && "hover:border-foreground/30",
+				task.completed && !overlay && "opacity-60",
+				overlay && "cursor-grabbing shadow-2xl ring-2 ring-foreground/30",
 			)}
 		>
 			<div className="flex items-start gap-2">
 				<Checkbox
 					checked={task.completed}
-					onCheckedChange={(v) => handleToggle(v === true)}
+					onCheckedChange={(v) => onToggle?.(v === true)}
 					className="mt-0.5"
 					aria-label="Đánh dấu hoàn thành"
+					disabled={overlay || dragging}
 				/>
 
-				{/* Drag handle area — the text */}
 				<button
 					type="button"
-					className="min-w-0 flex-1 cursor-grab text-left active:cursor-grabbing"
-					{...attributes}
-					{...listeners}
+					className={cn(
+						"min-w-0 flex-1 text-left",
+						overlay
+							? "cursor-grabbing"
+							: "cursor-grab touch-none active:cursor-grabbing",
+					)}
+					{...dragHandleProps}
 				>
 					<p
 						className={cn(
@@ -122,31 +100,98 @@ export function TaskCard({ task, onEdit }: Props) {
 					)}
 				</button>
 
-				<DropdownMenu>
-					<DropdownMenuTrigger
-						render={
-							<Button
-								variant="ghost"
-								size="icon"
-								className="size-7 shrink-0 opacity-0 group-hover/card:opacity-100 data-[state=open]:opacity-100"
-								aria-label="Mở menu"
-							>
-								<MoreHorizontal className="size-4" />
-							</Button>
-						}
-					/>
-					<DropdownMenuContent align="end">
-						<DropdownMenuItem onSelect={onEdit}>
-							<Pencil className="mr-2 size-4" />
-							Sửa
-						</DropdownMenuItem>
-						<DropdownMenuItem variant="destructive" onSelect={handleDelete}>
-							<Trash2 className="mr-2 size-4" />
-							Xóa
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
+				{!overlay && (
+					<DropdownMenu>
+						<DropdownMenuTrigger
+							render={
+								<Button
+									variant="ghost"
+									size="icon"
+									className="size-7 shrink-0 opacity-0 group-hover/card:opacity-100 data-[state=open]:opacity-100"
+									aria-label="Mở menu"
+								>
+									<MoreHorizontal className="size-4" />
+								</Button>
+							}
+						/>
+						<DropdownMenuContent align="end">
+							<DropdownMenuItem onSelect={onEdit}>
+								<Pencil className="mr-2 size-4" />
+								Sửa
+							</DropdownMenuItem>
+							<DropdownMenuItem variant="destructive" onSelect={onDelete}>
+								<Trash2 className="mr-2 size-4" />
+								Xóa
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+				)}
 			</div>
+		</div>
+	);
+}
+
+export function TaskCard({ task, onEdit }: Props) {
+	const [isPending, startTransition] = useTransition();
+
+	const {
+		attributes,
+		listeners,
+		setNodeRef,
+		transform,
+		transition,
+		isDragging,
+	} = useSortable({
+		id: task.id,
+		data: { type: "task", quadrant: task.quadrant },
+	});
+
+	const style: React.CSSProperties = {
+		transform: CSS.Transform.toString(transform),
+		transition,
+		// Hide the original card while its DragOverlay clone follows the cursor,
+		// but keep its space reserved so neighbours don't shift around.
+		opacity: isDragging ? 0 : 1,
+	};
+
+	function handleToggle(checked: boolean) {
+		startTransition(async () => {
+			try {
+				await toggleTaskCompleted({ id: task.id, completed: checked });
+			} catch (err) {
+				toast.error(err instanceof Error ? err.message : "Có lỗi xảy ra");
+			}
+		});
+	}
+
+	function handleDelete() {
+		startTransition(async () => {
+			try {
+				await deleteTask({ id: task.id });
+				toast.success("Đã xóa task");
+			} catch (err) {
+				toast.error(err instanceof Error ? err.message : "Có lỗi xảy ra");
+			}
+		});
+	}
+
+	return (
+		<div
+			ref={setNodeRef}
+			style={style}
+			className={cn(isPending && "pointer-events-none opacity-50")}
+		>
+			<TaskCardView
+				task={task}
+				dragging={isDragging}
+				onToggle={handleToggle}
+				onEdit={onEdit}
+				onDelete={handleDelete}
+				dragHandleProps={{
+					...attributes,
+					...listeners,
+				}}
+			/>
 		</div>
 	);
 }
