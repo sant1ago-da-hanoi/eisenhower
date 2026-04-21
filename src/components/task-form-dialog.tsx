@@ -185,19 +185,21 @@ export function TaskFormDialog({
 								setValue("quadrant", v as Quadrant, { shouldDirty: true })
 							}
 						>
-							<SelectTrigger id={quadrantId}>
+							<SelectTrigger id={quadrantId} className="w-full">
 								<SelectValue />
 							</SelectTrigger>
-							<SelectContent>
+							<SelectContent alignItemWithTrigger={false}>
 								{QUADRANTS.map((q) => {
 									const cfg = QUADRANT_CONFIG[q];
 									return (
 										<SelectItem key={q} value={q}>
-											<span className={cn("font-medium", cfg.accentText)}>
-												{cfg.verb}
-											</span>
-											<span className="text-muted-foreground ml-2">
-												· {cfg.label}
+											<span className="flex items-center gap-2">
+												<span className={cn("font-medium", cfg.accentText)}>
+													{cfg.verb}
+												</span>
+												<span className="text-muted-foreground">
+													· {cfg.label}
+												</span>
 											</span>
 										</SelectItem>
 									);

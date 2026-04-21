@@ -4,7 +4,7 @@ import Database from "better-sqlite3";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import { nanoid } from "nanoid";
 import * as schema from "./schema";
-import { taskTags, tags, tasks } from "./schema";
+import { tags, tasks, taskTags } from "./schema";
 
 const DB_PATH = process.env.DATABASE_URL ?? "./data/app.db";
 
