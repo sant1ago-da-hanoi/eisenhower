@@ -6,7 +6,7 @@ import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { deleteTask, toggleTaskCompleted } from "@/app/actions";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
 	DropdownMenu,
@@ -103,23 +103,20 @@ export function TaskCardView({
 				{!overlay && (
 					<DropdownMenu>
 						<DropdownMenuTrigger
-							render={
-								<Button
-									variant="ghost"
-									size="icon-sm"
-									className="shrink-0 opacity-0 group-hover/card:opacity-100 data-[state=open]:opacity-100"
-									aria-label="Mở menu"
-								>
-									<MoreHorizontal className="size-4" />
-								</Button>
-							}
-						/>
+							aria-label="Mở menu"
+							className={cn(
+								buttonVariants({ variant: "ghost", size: "icon-sm" }),
+								"shrink-0 opacity-0 group-hover/card:opacity-100 aria-expanded:opacity-100",
+							)}
+						>
+							<MoreHorizontal className="size-4" />
+						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
-							<DropdownMenuItem onSelect={onEdit}>
+							<DropdownMenuItem onClick={onEdit}>
 								<Pencil className="mr-2 size-4" />
 								Sửa
 							</DropdownMenuItem>
-							<DropdownMenuItem variant="destructive" onSelect={onDelete}>
+							<DropdownMenuItem variant="destructive" onClick={onDelete}>
 								<Trash2 className="mr-2 size-4" />
 								Xóa
 							</DropdownMenuItem>

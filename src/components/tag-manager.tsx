@@ -4,7 +4,7 @@ import { Tag as TagIcon, Trash2 } from "lucide-react";
 import { useId, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { createTag, deleteTag } from "@/app/actions";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { Tag } from "@/db/schema";
+import { cn } from "@/lib/utils";
 
 const DEFAULT_COLORS = [
 	"#ef4444",
@@ -71,13 +72,11 @@ export function TagManager({ tags }: Props) {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger
-				render={
-					<Button variant="outline" size="sm">
-						<TagIcon className="mr-1.5 size-3.5" />
-						Tags ({tags.length})
-					</Button>
-				}
-			/>
+				className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
+			>
+				<TagIcon className="mr-1.5 size-3.5" />
+				Tags ({tags.length})
+			</DialogTrigger>
 			<DialogContent className="sm:max-w-md">
 				<DialogHeader>
 					<DialogTitle>Quản lý tags</DialogTitle>
