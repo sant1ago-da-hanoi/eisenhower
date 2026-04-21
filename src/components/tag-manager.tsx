@@ -108,11 +108,11 @@ export function TagManager({ tags }: Props) {
 						</div>
 						<div className="flex flex-wrap gap-1.5">
 							{DEFAULT_COLORS.map((c) => (
-								<button
+								<Button
 									key={c}
-									type="button"
+									variant="ghost"
 									onClick={() => setColor(c)}
-									className="size-6 rounded-full border-2 transition"
+									className="size-6 rounded-full border-2 bg-clip-padding p-0 hover:bg-transparent"
 									style={{
 										backgroundColor: c,
 										borderColor:

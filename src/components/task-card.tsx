@@ -58,13 +58,13 @@ export function TaskCardView({
 					disabled={overlay || dragging}
 				/>
 
-				<button
-					type="button"
+				<Button
+					variant="ghost"
 					className={cn(
-						"min-w-0 flex-1 text-left",
+						"block h-auto min-w-0 flex-1 flex-col items-stretch justify-start whitespace-normal rounded-none bg-transparent px-0 py-0 text-left font-normal hover:bg-transparent",
 						overlay
-							? "cursor-grabbing"
-							: "cursor-grab touch-none active:cursor-grabbing",
+							? "!cursor-grabbing"
+							: "!cursor-grab touch-none active:!cursor-grabbing",
 					)}
 					{...dragHandleProps}
 				>
@@ -98,7 +98,7 @@ export function TaskCardView({
 							))}
 						</div>
 					)}
-				</button>
+				</Button>
 
 				{!overlay && (
 					<DropdownMenu>
@@ -106,8 +106,8 @@ export function TaskCardView({
 							render={
 								<Button
 									variant="ghost"
-									size="icon"
-									className="size-7 shrink-0 opacity-0 group-hover/card:opacity-100 data-[state=open]:opacity-100"
+									size="icon-sm"
+									className="shrink-0 opacity-0 group-hover/card:opacity-100 data-[state=open]:opacity-100"
 									aria-label="Mở menu"
 								>
 									<MoreHorizontal className="size-4" />

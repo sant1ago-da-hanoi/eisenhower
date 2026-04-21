@@ -80,13 +80,13 @@ export function QuadrantColumn({ quadrant, tasks, onCreate, onEdit }: Props) {
 			>
 				<div className="flex flex-1 flex-col gap-2">
 					{tasks.length === 0 ? (
-						<button
-							type="button"
+						<Button
+							variant="ghost"
 							onClick={() => onCreate(quadrant)}
-							className="flex flex-1 items-center justify-center rounded-lg border border-dashed border-border/60 py-6 text-xs text-muted-foreground transition hover:border-foreground/40 hover:text-foreground"
+							className="flex h-auto flex-1 items-center justify-center rounded-lg border border-dashed border-border/60 bg-transparent py-6 text-xs font-normal text-muted-foreground hover:border-foreground/40 hover:bg-transparent hover:text-foreground"
 						>
 							Kéo task vào đây hoặc + để tạo mới
-						</button>
+						</Button>
 					) : (
 						tasks.map((task) => (
 							<TaskCard key={task.id} task={task} onEdit={() => onEdit(task)} />

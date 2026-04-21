@@ -215,15 +215,15 @@ export function TaskFormDialog({
 								{tags.map((tag) => {
 									const active = selectedTagIds.includes(tag.id);
 									return (
-										<button
+										<Button
 											key={tag.id}
-											type="button"
+											variant="outline"
+											size="sm"
 											onClick={() => toggleTag(tag.id)}
 											className={cn(
-												"inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition",
-												active
-													? "border-foreground/40 bg-foreground/10"
-													: "border-border hover:bg-accent",
+												"h-auto gap-1 rounded-full px-2.5 py-1 text-xs font-normal",
+												active &&
+													"border-foreground/40 bg-foreground/10 hover:bg-foreground/10",
 											)}
 										>
 											<span
@@ -232,7 +232,7 @@ export function TaskFormDialog({
 												aria-hidden
 											/>
 											{tag.name}
-										</button>
+										</Button>
 									);
 								})}
 							</div>

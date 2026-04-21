@@ -38,16 +38,16 @@ export function BacklogPanel({ tasks, onEdit, onCreate }: Props) {
 			)}
 		>
 			<header className="flex items-center justify-between gap-2 px-4 py-3">
-				<button
-					type="button"
+				<Button
+					variant="ghost"
 					onClick={() => setExpanded((v) => !v)}
-					className="flex items-center gap-2 text-left"
+					className="h-auto justify-start gap-2 bg-transparent px-0 hover:bg-transparent"
 				>
 					<Inbox className="size-4 text-muted-foreground" />
-					<h2 className="text-sm font-semibold uppercase tracking-wide">
+					<span className="text-sm font-semibold uppercase tracking-wide">
 						Backlog
-					</h2>
-					<span className="text-xs text-muted-foreground">
+					</span>
+					<span className="text-xs font-normal text-muted-foreground">
 						· {tasks.length}
 						{pending > 0 && tasks.length !== pending && (
 							<span> ({pending} chưa xong)</span>
@@ -64,7 +64,7 @@ export function BacklogPanel({ tasks, onEdit, onCreate }: Props) {
 							!expanded && "-rotate-90",
 						)}
 					/>
-				</button>
+				</Button>
 				<Button variant="outline" size="sm" onClick={onCreate}>
 					<span className="font-mono text-xs text-muted-foreground mr-1">
 						N
