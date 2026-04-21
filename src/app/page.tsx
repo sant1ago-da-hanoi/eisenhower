@@ -1,4 +1,4 @@
-import { MatrixBoard } from "@/components/matrix-board";
+import { MatrixBoardClient } from "@/components/matrix-board-client";
 import { QuickAdd } from "@/components/quick-add";
 import { TagManager } from "@/components/tag-manager";
 import { getAllTags, getAllTasks } from "@/db/queries";
@@ -29,7 +29,7 @@ export default async function Home() {
 				<TagManager tags={tags} />
 			</header>
 
-			<MatrixBoard tasks={tasks} tags={tags} />
+			<MatrixBoardClient tasks={tasks} tags={tags} />
 
 			<QuickAdd />
 
