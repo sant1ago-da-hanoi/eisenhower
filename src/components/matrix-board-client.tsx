@@ -31,28 +31,28 @@ export function MatrixBoardClient({ tasks, tags }: Props) {
 function MatrixSkeleton() {
 	return (
 		<>
-			<div className="grid gap-3 md:grid-cols-2 md:gap-4">
+			<div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4">
 				{QUADRANT_ORDER.map((q) => {
 					const cfg = QUADRANT_CONFIG[q];
 					return (
 						<section
 							key={q}
 							className={cn(
-								"flex min-h-[260px] flex-col rounded-xl border-2 p-3",
+								"flex min-h-[200px] flex-col rounded-xl border-2 p-2 sm:min-h-[260px] sm:p-3",
 								cfg.accent,
 								cfg.accentBorder,
 							)}
 						>
-							<header className="mb-3">
+							<header className="mb-2 sm:mb-3">
 								<h2
 									className={cn(
-										"text-sm font-bold uppercase tracking-wide",
+										"text-xs font-bold uppercase tracking-wide sm:text-sm",
 										cfg.accentText,
 									)}
 								>
 									{cfg.verb}
 								</h2>
-								<p className="mt-0.5 text-xs text-muted-foreground">
+								<p className="mt-0.5 hidden text-xs text-muted-foreground sm:block">
 									{cfg.tagline}
 								</p>
 							</header>

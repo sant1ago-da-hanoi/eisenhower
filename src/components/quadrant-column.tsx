@@ -34,19 +34,19 @@ export function QuadrantColumn({ quadrant, tasks, onCreate, onEdit }: Props) {
 		<section
 			ref={setNodeRef}
 			className={cn(
-				"flex min-h-[260px] flex-col rounded-xl border-2 p-3 transition",
+				"flex min-h-[200px] flex-col rounded-xl border-2 p-2 transition sm:min-h-[260px] sm:p-3",
 				cfg.accent,
 				cfg.accentBorder,
 				isOver &&
 					"ring-2 ring-foreground/30 ring-offset-2 ring-offset-background",
 			)}
 		>
-			<header className="mb-3 flex items-start justify-between gap-2">
+			<header className="mb-2 flex items-start justify-between gap-1 sm:mb-3 sm:gap-2">
 				<div className="min-w-0">
-					<div className="flex items-center gap-2">
+					<div className="flex flex-wrap items-center gap-x-2">
 						<h2
 							className={cn(
-								"text-sm font-bold uppercase tracking-wide",
+								"text-xs font-bold uppercase tracking-wide sm:text-sm",
 								cfg.accentText,
 							)}
 						>
@@ -61,12 +61,14 @@ export function QuadrantColumn({ quadrant, tasks, onCreate, onEdit }: Props) {
 							)}
 						</span>
 					</div>
-					<p className="mt-0.5 text-xs text-muted-foreground">{cfg.tagline}</p>
+					<p className="mt-0.5 hidden text-xs text-muted-foreground sm:block">
+						{cfg.tagline}
+					</p>
 				</div>
 				<Button
 					variant="ghost"
-					size="icon"
-					className="size-7 shrink-0"
+					size="icon-sm"
+					className="shrink-0"
 					onClick={() => onCreate(quadrant)}
 					aria-label={`Thêm task vào ${cfg.verb}`}
 				>
@@ -78,14 +80,17 @@ export function QuadrantColumn({ quadrant, tasks, onCreate, onEdit }: Props) {
 				items={tasks.map((t) => t.id)}
 				strategy={verticalListSortingStrategy}
 			>
-				<div className="flex flex-1 flex-col gap-2">
+				<div className="flex flex-1 flex-col gap-1.5 sm:gap-2">
 					{tasks.length === 0 ? (
 						<Button
 							variant="ghost"
 							onClick={() => onCreate(quadrant)}
-							className="flex h-auto flex-1 items-center justify-center rounded-lg border border-dashed border-border/60 bg-transparent py-6 text-xs font-normal text-muted-foreground hover:border-foreground/40 hover:bg-transparent hover:text-foreground"
+							className="flex h-auto flex-1 items-center justify-center rounded-lg border border-dashed border-border/60 bg-transparent px-2 py-4 text-center text-[11px] font-normal leading-tight text-muted-foreground hover:border-foreground/40 hover:bg-transparent hover:text-foreground sm:py-6 sm:text-xs"
 						>
-							Kéo task vào đây hoặc + để tạo mới
+							<span className="hidden sm:inline">
+								Kéo task vào đây hoặc + để tạo mới
+							</span>
+							<span className="sm:hidden">+ để tạo</span>
 						</Button>
 					) : (
 						tasks.map((task) => (

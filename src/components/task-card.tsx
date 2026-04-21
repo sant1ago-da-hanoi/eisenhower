@@ -43,13 +43,13 @@ export function TaskCardView({
 	return (
 		<div
 			className={cn(
-				"group/card relative rounded-lg border bg-card p-3 shadow-sm transition-shadow",
+				"group/card relative rounded-lg border bg-card p-2 shadow-sm transition-shadow sm:p-3",
 				!overlay && "hover:border-foreground/30",
 				task.completed && !overlay && "opacity-60",
 				overlay && "cursor-grabbing shadow-2xl ring-2 ring-foreground/30",
 			)}
 		>
-			<div className="flex items-start gap-2">
+			<div className="flex items-start gap-1.5 sm:gap-2">
 				<Checkbox
 					checked={task.completed}
 					onCheckedChange={(v) => onToggle?.(v === true)}
@@ -70,14 +70,14 @@ export function TaskCardView({
 				>
 					<p
 						className={cn(
-							"text-sm font-medium leading-snug break-words",
+							"line-clamp-3 text-[13px] font-medium leading-snug break-words sm:text-sm",
 							task.completed && "line-through",
 						)}
 					>
 						{task.title}
 					</p>
 					{task.notes && (
-						<p className="mt-1 line-clamp-2 text-xs text-muted-foreground break-words">
+						<p className="mt-1 line-clamp-2 hidden text-xs text-muted-foreground break-words sm:block">
 							{task.notes}
 						</p>
 					)}
@@ -106,7 +106,7 @@ export function TaskCardView({
 							aria-label="Mở menu"
 							className={cn(
 								buttonVariants({ variant: "ghost", size: "icon-sm" }),
-								"shrink-0 opacity-0 group-hover/card:opacity-100 aria-expanded:opacity-100",
+								"shrink-0 sm:opacity-0 sm:group-hover/card:opacity-100 sm:aria-expanded:opacity-100",
 							)}
 						>
 							<MoreHorizontal className="size-4" />

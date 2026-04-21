@@ -84,7 +84,7 @@ export function QuickAdd() {
 				if (!v) setTitle("");
 			}}
 		>
-			<DialogContent className="top-[20%] translate-y-0 sm:max-w-lg">
+			<DialogContent className="top-[15%] translate-y-0 sm:top-[20%] sm:max-w-lg">
 				<DialogHeader>
 					<DialogTitle>Thêm nhanh vào Backlog</DialogTitle>
 					<DialogDescription>

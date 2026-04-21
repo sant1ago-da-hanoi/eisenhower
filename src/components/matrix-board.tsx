@@ -135,7 +135,7 @@ export function MatrixBoard({ tasks, tags }: Props) {
 				onDragEnd={handleDragEnd}
 				onDragCancel={() => setActiveTask(null)}
 			>
-				<div className="grid gap-3 md:grid-cols-2 md:gap-4">
+				<div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4">
 					{QUADRANT_ORDER.map((q) => (
 						<QuadrantColumn
 							key={q}
