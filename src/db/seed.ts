@@ -30,6 +30,23 @@ async function main() {
 	db.insert(tags).values(tagDefs).run();
 
 	const taskDefs = [
+		// Backlog — chưa phân loại
+		{
+			title: "Ý tưởng: viết blog về productivity",
+			quadrant: "BACKLOG" as const,
+			tagIdxs: [1],
+		},
+		{
+			title: "Research tool mới cho team",
+			quadrant: "BACKLOG" as const,
+			tagIdxs: [0],
+		},
+		{
+			title: "Refactor module auth — lúc nào rảnh",
+			quadrant: "BACKLOG" as const,
+			tagIdxs: [0],
+		},
+		// Q1 — Do
 		{
 			title: "Fix production bug đang ảnh hưởng khách hàng",
 			notes: "Logs cho thấy lỗi timeout ở checkout API.",
@@ -41,6 +58,7 @@ async function main() {
 			quadrant: "Q1" as const,
 			tagIdxs: [0],
 		},
+		// Q2 — Schedule
 		{
 			title: "Tập gym 3 buổi/tuần",
 			notes: "Mục tiêu dài hạn, cần duy trì.",
@@ -57,6 +75,7 @@ async function main() {
 			quadrant: "Q2" as const,
 			tagIdxs: [1],
 		},
+		// Q3 — Delegate
 		{
 			title: "Họp standup sáng mai lúc 9h",
 			notes: "Có thể nhờ team member khác tham gia thay.",
@@ -68,6 +87,7 @@ async function main() {
 			quadrant: "Q3" as const,
 			tagIdxs: [0],
 		},
+		// Q4 — Delete
 		{
 			title: "Lướt TikTok vô bổ",
 			quadrant: "Q4" as const,

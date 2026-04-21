@@ -8,14 +8,21 @@ import {
 } from "drizzle-orm/sqlite-core";
 
 /**
- * Eisenhower matrix quadrants.
+ * Task location: 4 Eisenhower quadrants + a BACKLOG staging area
+ * for tasks that haven't been classified yet (GTD inbox pattern).
+ *
  * Q1 = urgent + important (Do)
  * Q2 = not urgent + important (Schedule)
  * Q3 = urgent + not important (Delegate)
  * Q4 = not urgent + not important (Delete)
+ * BACKLOG = captured but not yet classified
  */
-export const QUADRANTS = ["Q1", "Q2", "Q3", "Q4"] as const;
+export const QUADRANTS = ["BACKLOG", "Q1", "Q2", "Q3", "Q4"] as const;
 export type Quadrant = (typeof QUADRANTS)[number];
+
+/** The four "real" Eisenhower quadrants (excludes BACKLOG). */
+export const MATRIX_QUADRANTS = ["Q1", "Q2", "Q3", "Q4"] as const;
+export type MatrixQuadrant = (typeof MATRIX_QUADRANTS)[number];
 
 export const tasks = sqliteTable(
 	"tasks",

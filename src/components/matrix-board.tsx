@@ -15,6 +15,7 @@ import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { useOptimistic, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { moveTask } from "@/app/actions";
+import { BacklogPanel } from "@/components/backlog-panel";
 import { QuadrantColumn } from "@/components/quadrant-column";
 import { TaskCardView } from "@/components/task-card";
 import { TaskFormDialog } from "@/components/task-form-dialog";
@@ -65,6 +66,12 @@ export function MatrixBoard({ tasks, tags }: Props) {
 	function handleCreate(quadrant: Quadrant) {
 		setEditingTask(null);
 		setDefaultQuadrant(quadrant);
+		setDialogOpen(true);
+	}
+
+	function handleCreateBacklog() {
+		setEditingTask(null);
+		setDefaultQuadrant("BACKLOG");
 		setDialogOpen(true);
 	}
 
@@ -139,6 +146,12 @@ export function MatrixBoard({ tasks, tags }: Props) {
 						/>
 					))}
 				</div>
+
+				<BacklogPanel
+					tasks={optimisticTasks.filter((t) => t.quadrant === "BACKLOG")}
+					onEdit={handleEdit}
+					onCreate={handleCreateBacklog}
+				/>
 
 				<DragOverlay dropAnimation={null}>
 					{activeTask ? <TaskCardView task={activeTask} overlay /> : null}

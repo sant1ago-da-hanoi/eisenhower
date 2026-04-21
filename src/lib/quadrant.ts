@@ -5,14 +5,25 @@ export type QuadrantConfig = {
 	label: string;
 	verb: string;
 	tagline: string;
-	urgent: boolean;
-	important: boolean;
+	urgent: boolean | null;
+	important: boolean | null;
 	accent: string;
 	accentBorder: string;
 	accentText: string;
 };
 
 export const QUADRANT_CONFIG: Record<Quadrant, QuadrantConfig> = {
+	BACKLOG: {
+		id: "BACKLOG",
+		label: "Backlog",
+		verb: "Capture",
+		tagline: "Ghi nhanh — chưa phân loại, kéo lên matrix khi sẵn sàng",
+		urgent: null,
+		important: null,
+		accent: "bg-muted/40 dark:bg-muted/20",
+		accentBorder: "border-border",
+		accentText: "text-muted-foreground",
+	},
 	Q1: {
 		id: "Q1",
 		label: "Urgent & Important",
@@ -59,4 +70,10 @@ export const QUADRANT_CONFIG: Record<Quadrant, QuadrantConfig> = {
 	},
 };
 
-export const QUADRANT_ORDER: Quadrant[] = ["Q1", "Q2", "Q3", "Q4"];
+/** Order for rendering the 2×2 matrix (excludes BACKLOG). */
+export const QUADRANT_ORDER: Array<"Q1" | "Q2" | "Q3" | "Q4"> = [
+	"Q1",
+	"Q2",
+	"Q3",
+	"Q4",
+];

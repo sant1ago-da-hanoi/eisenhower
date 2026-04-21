@@ -1,4 +1,5 @@
 import { MatrixBoard } from "@/components/matrix-board";
+import { QuickAdd } from "@/components/quick-add";
 import { TagManager } from "@/components/tag-manager";
 import { getAllTags, getAllTasks } from "@/db/queries";
 
@@ -18,13 +19,19 @@ export default async function Home() {
 						Phân loại task theo{" "}
 						<span className="font-medium text-foreground">Urgent</span> ×{" "}
 						<span className="font-medium text-foreground">Important</span>. Kéo
-						thả giữa các ô để đổi mức ưu tiên.
+						thả giữa các ô để đổi mức ưu tiên. Nhấn{" "}
+						<kbd className="rounded border border-border bg-muted/50 px-1.5 py-0.5 font-mono text-[10px]">
+							N
+						</kbd>{" "}
+						để thêm nhanh vào Backlog.
 					</p>
 				</div>
 				<TagManager tags={tags} />
 			</header>
 
 			<MatrixBoard tasks={tasks} tags={tags} />
+
+			<QuickAdd />
 
 			<footer className="mt-10 text-center text-xs text-muted-foreground">
 				{tasks.length} task · {tags.length} tag
